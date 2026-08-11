@@ -136,3 +136,149 @@ The first project commit records the initial working Python application.
 I can view commit history with:
 
 `git log --oneline`
+
+
+---
+
+# Phase 2 — LLM API Integration
+
+### Large Language Model (LLM)
+
+LLM stands for Large Language Model.
+
+In this project, the LLM is the component that interprets a user's infrastructure issue and generates troubleshooting guidance.
+
+The LLM is not running locally on my Mac. The application accesses it through a remote API.
+
+---
+
+### API
+
+API stands for Application Programming Interface.
+
+In this project, the Python application uses the OpenAI API to send infrastructure questions to an LLM and receive generated responses.
+
+The application currently consumes an external API.
+
+It does not yet expose its own API.
+
+---
+
+### API Client
+
+An API client is code or an object used to communicate with an API.
+
+In this project:
+
+`client = OpenAI()`
+
+creates an OpenAI API client.
+
+The client is then used to send requests.
+
+---
+
+### SDK
+
+SDK stands for Software Development Kit.
+
+The OpenAI Python SDK provides Python classes and functions that simplify communication with the OpenAI API.
+
+It was installed with:
+
+`pip install openai`
+
+---
+
+### API Request
+
+A request is information sent by the application to an API.
+
+Example:
+
+- Model to use
+- User's infrastructure issue
+- Authentication information
+
+The request is sent using:
+
+`client.responses.create(...)`
+
+---
+
+### API Response
+
+A response is information returned by the API after processing a request.
+
+In this project, the generated text is accessed using:
+
+`response.output_text`
+
+---
+
+### API Key
+
+An API key is a credential used by an application to authenticate to an API.
+
+This project uses the environment variable:
+
+`OPENAI_API_KEY`
+
+The key is not hardcoded inside `app.py`.
+
+---
+
+### External Dependency
+
+An external dependency is a package or service that the application depends on but does not implement itself.
+
+Phase 2 introduces two important external dependencies:
+
+- OpenAI Python SDK
+- OpenAI API
+
+The SDK runs locally inside the Python virtual environment.
+
+The API is a remote service accessed over the network.
+
+---
+
+### requirements.txt
+
+`requirements.txt` records the Python packages required by the application.
+
+It can be used to recreate the project's dependencies on another machine with:
+
+`pip install -r requirements.txt`
+
+This is preferable to committing the local `.venv` directory.
+
+---
+
+### Error Handling
+
+Error handling allows the application to respond intentionally when an operation fails.
+
+The LLM API request is currently wrapped in:
+
+`try`
+
+and:
+
+`except`
+
+The `try` block contains code that may fail.
+
+The `except` block handles the failure and displays an error message instead of allowing an unhandled traceback.
+
+---
+
+### Syntax and Indentation
+
+Python uses indentation to define blocks of code.
+
+For example, code inside a `try` block must be indented.
+
+The `except` statement must align with the corresponding `try`.
+
+Incorrect indentation can cause a `SyntaxError`.

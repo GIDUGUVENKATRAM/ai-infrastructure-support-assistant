@@ -1,34 +1,19 @@
-# AI Infrastructure Support Assistant
-
-An AI-powered infrastructure support assistant built as a Forward Deployed Engineer (FDE) portfolio project.
-
-The project is being developed incrementally, starting with a simple Python application and progressively adding LLM integration, APIs, containerization, cloud deployment, retrieval-augmented generation (RAG), security, and evaluation.
-
-## Project Goal
-
-The goal of this project is to build an assistant that can help users troubleshoot infrastructure-related issues using an LLM and internal infrastructure documentation.
-
-Example infrastructure questions may include:
-
-- Why is a Linux server running out of disk space?
-- How can I troubleshoot high CPU utilization?
-- Why is a virtual machine unreachable?
-- How do I investigate a service that is not responding?
-
 ## Current Status
 
-**Phase 1 — Python CLI Foundation**
+**Phase 2 — LLM API Integration**
 
-The application currently:
+The application now:
 
 - Runs locally using Python
 - Accepts an infrastructure issue from the user
-- Stores the input in a Python variable
-- Displays the entered issue back to the user
+- Sends the issue to an LLM through the OpenAI API
+- Displays an AI-generated troubleshooting response
+- Uses the OpenAI Python SDK
+- Uses an environment variable for API credentials
+- Uses basic error handling for API failures
 - Uses a Python virtual environment for dependency isolation
+- Uses `requirements.txt` to record Python dependencies
 - Uses Git for version control
-
-AI/LLM functionality will be added in a later phase.
 
 ## Current Architecture
 
@@ -36,23 +21,33 @@ AI/LLM functionality will be added in a later phase.
 User
   |
   v
-Terminal
+Terminal / CLI
   |
   v
 Python Application
 (app.py)
+  |
+  v
+OpenAI Python SDK
+  |
+  v
+OpenAI API
+  |
+  v
+LLM
+  |
+  v
+Generated Response
+  |
+  v
+Python Application
+  |
+  v
+Terminal
+  |
+  v
+User
 ```
-
-## Project Structure
-
-```text
-ai-infrastructure-support-assistant/
-├── .gitignore
-├── README.md
-└── app.py
-```
-
-The local `.venv/` directory is excluded from Git.
 
 ## Running the Application
 
@@ -61,6 +56,14 @@ Activate the virtual environment:
 ```bash
 source .venv/bin/activate
 ```
+
+Set the API key in the current shell session:
+
+```bash
+export OPENAI_API_KEY=your_api_key
+```
+
+Do not hardcode the API key inside the source code.
 
 Run the application:
 
@@ -75,8 +78,8 @@ AI Infrastructure Support Assistant
 -----------------------------------
 Describe your infrastructure issue: Linux server is running out of disk space
 
-You entered:
-Linux server is running out of disk space
+AI Response:
+Start by checking filesystem utilization using `df -h`...
 ```
 
 ## Technology Stack
@@ -84,10 +87,12 @@ Linux server is running out of disk space
 Current:
 
 - Python
+- OpenAI API
+- OpenAI Python SDK
 - Git
 
-The technology stack will expand as new capabilities are implemented.
+Python dependencies are recorded in:
 
-## Development Approach
-
-This project follows an incremental, build-first approach. Each phase introduces a small set of concepts and results in a working, testable version of the application.
+```text
+requirements.txt
+```
