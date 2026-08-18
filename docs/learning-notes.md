@@ -282,3 +282,33 @@ For example, code inside a `try` block must be indented.
 The `except` statement must align with the corresponding `try`.
 
 Incorrect indentation can cause a `SyntaxError`.
+
+
+## Phase 3 — FastAPI
+
+### FastAPI
+A Python framework used to build APIs. In this project, FastAPI exposes the AI support functionality so other clients can send infrastructure issues to the application.
+
+### Endpoint
+A specific API path that performs a function.
+
+Current endpoints:
+
+- `GET /health` — checks whether the API is running.
+- `POST /support` — accepts an infrastructure issue and returns AI-generated troubleshooting guidance.
+
+### POST
+An HTTP method used here to send an infrastructure issue to the application for processing.
+
+### JSON
+A structured data format used to send requests and return responses between the client and API.
+
+### Pydantic
+Used by FastAPI to define and validate the expected structure of incoming data.
+
+### Uvicorn
+The web server used to run the FastAPI application locally.
+
+### curl
+A command-line HTTP client used to test our API before a Web UI exists.
+
