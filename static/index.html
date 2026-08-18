@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Infrastructure Support Assistant</title>
+</head>
+
+<body>
+
+    <h1>AI Infrastructure Support Assistant</h1>
+
+    <p>Describe your infrastructure issue:</p>
+
+    <textarea id="issue" rows="6" cols="60"></textarea>
+
+    <br><br>
+
+    <button id="askButton"> Ask AI </button>
+    <h2>AI Response</h2>
+    <div id="response"></div>
+
+
+<script>
+    const button = document.getElementById("askButton");
+    const issueBox = document.getElementById("issue");
+    const responseBox = document.getElementById("response");
+
+    button.addEventListener("click", async () => {
+        const issue = issueBox.value;
+
+        responseBox.textContent = "Thinking...";
+
+        try {
+            const response = await fetch("http://127.0.0.1:8000/support", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    issue: issue
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                responseBox.textContent = data.detail || "Something went wrong.";
+                return;
+            }
+
+            responseBox.textContent = data.response;
+
+        } catch (error) {
+            responseBox.textContent = "Could not connect to the backend service.";
+        }
+    });
+</script>
+
+</body>
+</html>
