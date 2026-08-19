@@ -1,8 +1,10 @@
+from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from openai import OpenAI
 
+load_dotenv()
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
