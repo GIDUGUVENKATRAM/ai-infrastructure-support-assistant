@@ -312,3 +312,28 @@ The web server used to run the FastAPI application locally.
 ### curl
 A command-line HTTP client used to test our API before a Web UI exists.
 
+## Phase 6 — Logging and Observability
+
+### Logging
+Logging records important application events and errors.
+
+The application now logs:
+- When a support request is received
+- When the application sends a request to the LLM
+- When the LLM response is received successfully
+- When an LLM request fails
+
+### Observability
+Observability is the ability to understand what is happening inside a running application using signals such as logs, metrics, and traces.
+
+This project currently uses basic application logs.
+
+### Docker Logs
+Logs produced by the application inside the container can be viewed with:
+
+`docker logs ai-infra-container`
+
+Live logs can be followed using:
+
+`docker logs -f ai-infra-container`
+
