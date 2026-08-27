@@ -180,12 +180,11 @@ def demo_support(
         }
 
     except Exception as e:
-        print(
-            f"FOUNDRY_AGENT_ERROR: {type(e).__name__}: {str(e)}",
-            flush=True
+        logger.exception(
+            "Foundry agent request failed: %s: %s",
+            type(e).__name__,
+            str(e)
         )
-
-        logger.exception("Foundry agent request failed")
 
         raise fastapi.HTTPException(
             status_code=500,
