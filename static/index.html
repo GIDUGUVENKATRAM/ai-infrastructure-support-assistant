@@ -1,59 +1,774 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>AI Infrastructure Support Assistant</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Helvetica, Arial, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+            min-height: 100vh;
+        }
+
+        /* ---------- Header ---------- */
+
+        header {
+            background: #0f172a;
+            color: white;
+            padding: 22px 40px;
+        }
+
+        .header-content {
+            max-width: 1150px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand h1 {
+            font-size: 23px;
+            font-weight: 650;
+            margin-bottom: 5px;
+        }
+
+        .brand p {
+            color: #aab6ca;
+            font-size: 14px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #d7e0ed;
+        }
+
+        .status-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #f59e0b;
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+        }
+
+        /* ---------- Main ---------- */
+
+        main {
+            max-width: 1050px;
+            margin: 45px auto;
+            padding: 0 24px;
+        }
+
+        .intro {
+            margin-bottom: 25px;
+        }
+
+        .intro h2 {
+            font-size: 29px;
+            margin-bottom: 9px;
+        }
+
+        .intro p {
+            color: #64748b;
+            line-height: 1.6;
+            max-width: 720px;
+        }
+
+        /* ---------- Support Card ---------- */
+
+        .support-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 28px;
+            box-shadow: 0 6px 22px rgba(15, 23, 42, 0.05);
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 145px;
+            resize: vertical;
+            padding: 16px;
+            font-family: inherit;
+            font-size: 15px;
+            line-height: 1.5;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        /* ---------- Response ---------- */
+
+        .response-section {
+            display: none;
+            margin-top: 25px;
+        }
+
+        .response-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .response-header h3 {
+            font-size: 17px;
+        }
+
+        .ai-label {
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 5px 9px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        #response {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            white-space: pre-wrap;
+            line-height: 1.7;
+            font-size: 14.5px;
+            color: #334155;
+            min-height: 80px;
+        }
+
+        .error {
+            color: #b91c1c !important;
+            background: #fef2f2 !important;
+            border-color: #fecaca !important;
+        }
+
+        /* ---------- Capabilities ---------- */
+
+        .capabilities {
+            margin-top: 35px;
+        }
+
+        .capabilities h3 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #64748b;
+            margin-bottom: 15px;
+        }
+
+        .capability-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .capability {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 9px;
+            padding: 15px;
+        }
+
+        .capability-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .capability p {
+            color: #64748b;
+            font-size: 12.5px;
+            line-height: 1.4;
+        }
+
+        .active-icon {
+            color: #16a34a;
+        }
+
+        .ready-icon {
+            color: #94a3b8;
+        }
+
+        /* ---------- Footer ---------- */
+
+        footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+            margin: 40px 0 25px;
+        }
+
+        /* ---------- Mobile ---------- */
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 20px;
+            }
+
+            .header-content {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            main {
+                margin-top: 30px;
+            }
+
+            .capability-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .intro h2 {
+                font-size: 25px;
+            }
+        }
+
+    </style>
 </head>
+
 
 <body>
 
-    <h1>AI Infrastructure Support Assistant</h1>
 
-    <p>Describe your infrastructure issue:</p>
+<header>
 
-    <textarea id="issue" rows="6" cols="60"></textarea>
+    <div class="header-content">
 
-    <br><br>
+        <div class="brand">
 
-    <button id="askButton"> Ask AI </button>
-    <h2>AI Response</h2>
-    <div id="response"></div>
+            <h1>AI Infrastructure Support Assistant</h1>
+
+            <p>
+                AI-assisted infrastructure troubleshooting
+            </p>
+
+        </div>
+
+
+        <div class="status">
+
+            <span
+                class="status-dot"
+                id="statusDot">
+            </span>
+
+            <span id="statusText">
+                Checking...
+            </span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main>
+
+
+    <section class="intro">
+
+        <h2>
+            Infrastructure Support
+        </h2>
+
+        <p>
+            Describe an infrastructure issue and receive AI-assisted
+            troubleshooting guidance powered by Azure AI.
+        </p>
+
+    </section>
+
+
+
+    <section class="support-card">
+
+
+        <label for="issue">
+            Infrastructure issue
+        </label>
+
+
+        <textarea
+            id="issue"
+            placeholder="Example: A Linux VM has high CPU utilization and users are reporting slow application performance..."
+        ></textarea>
+
+
+        <div class="actions">
+
+            <button id="askButton">
+                Analyze Issue →
+            </button>
+
+        </div>
+
+
+
+        <div
+            class="response-section"
+            id="responseSection"
+        >
+
+            <div class="response-header">
+
+                <h3>
+                    AI Analysis
+                </h3>
+
+                <span class="ai-label">
+                    AI Generated
+                </span>
+
+            </div>
+
+
+            <div id="response"></div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <section class="capabilities">
+
+
+        <h3>
+            Platform Capabilities
+        </h3>
+
+
+        <div class="capability-grid">
+
+
+            <div class="capability">
+
+                <div class="capability-title">
+
+                    <span class="active-icon">
+                        ●
+                    </span>
+
+                    Azure AI Foundry
+
+                </div>
+
+                <p>
+                    LLM-powered infrastructure analysis.
+                </p>
+
+            </div>
+
+
+
+            <div class="capability">
+
+                <div class="capability-title">
+
+                    <span class="active-icon">
+                        ●
+                    </span>
+
+                    FastAPI
+
+                </div>
+
+                <p>
+                    Container-ready API service layer.
+                </p>
+
+            </div>
+
+
+
+            <div class="capability">
+
+                <div class="capability-title">
+
+                    <span class="active-icon">
+                        ●
+                    </span>
+
+                    Observability
+
+                </div>
+
+                <p>
+                    Azure Monitor and OpenTelemetry integration.
+                </p>
+
+            </div>
+
+
+
+            <div class="capability">
+
+                <div class="capability-title">
+
+                    <span class="active-icon">●</span>
+
+                    RAG 
+
+                </div>
+
+                <p> Grounded retrieval using infrastructure knowledge. </p>
+                    
+
+            </div>
+
+            <div class="capability">
+
+                <div class="capability-title">
+
+                    <span class="active-icon">●</span>
+        
+                    MCP 
+
+                </div>
+
+                <p>Connected MCP server for infrastructure health data.</p>
+
+            </div>
+
+            <div class="capability">
+
+                <div class="capability-title">
+
+                    <span class="active-icon">●</span>
+
+                    Agent+Tools
+
+                </div>
+
+                <p>Foundry agent can invoke external infrastructure tools.</p>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<footer>
+    AI Infrastructure Support Assistant · FDE Demo Project
+</footer>
+
 
 
 <script>
-    const button = document.getElementById("askButton");
-    const issueBox = document.getElementById("issue");
-    const responseBox = document.getElementById("response");
 
-    button.addEventListener("click", async () => {
-        const issue = issueBox.value;
+    /*
+     * Get the page elements that JavaScript needs.
+     */
 
-        responseBox.textContent = "Thinking...";
+    const button =
+        document.getElementById("askButton");
+
+    const issueBox =
+        document.getElementById("issue");
+
+    const responseBox =
+        document.getElementById("response");
+
+    const responseSection =
+        document.getElementById("responseSection");
+
+    const statusDot =
+        document.getElementById("statusDot");
+
+    const statusText =
+        document.getElementById("statusText");
+
+
+    /*
+     * Check whether the FastAPI backend is healthy.
+     */
+
+    async function checkHealth() {
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/support", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    issue: issue
-                })
-            });
 
-            const data = await response.json();
+            const response =
+                await fetch("/health");
+
 
             if (!response.ok) {
-                responseBox.textContent = data.detail || "Something went wrong.";
-                return;
+
+                throw new Error(
+                    "Health check failed"
+                );
+
             }
 
-            responseBox.textContent = data.response;
+
+            const data =
+                await response.json();
+
+
+            if (data.status === "ok") {
+
+                statusText.textContent =
+                    "System Ready";
+
+                statusDot.style.background =
+                    "#22c55e";
+
+                statusDot.style.boxShadow =
+                    "0 0 8px rgba(34, 197, 94, 0.7)";
+
+            } else {
+
+                statusText.textContent =
+                    "Service Unavailable";
+
+                statusDot.style.background =
+                    "#ef4444";
+
+                statusDot.style.boxShadow =
+                    "0 0 8px rgba(239, 68, 68, 0.7)";
+
+            }
+
 
         } catch (error) {
-            responseBox.textContent = "Could not connect to the backend service.";
+
+            statusText.textContent =
+                "Service Unavailable";
+
+            statusDot.style.background =
+                "#ef4444";
+
+            statusDot.style.boxShadow =
+                "0 0 8px rgba(239, 68, 68, 0.7)";
+
         }
-    });
+
+    }
+
+
+    /*
+     * Run the health check when the page loads.
+     */
+
+    checkHealth();
+
+
+
+    /*
+     * Analyze infrastructure issue.
+     */
+
+    button.addEventListener(
+        "click",
+        async () => {
+
+
+            const issue =
+                issueBox.value.trim();
+
+
+            /*
+             * Prevent empty requests.
+             */
+
+            if (!issue) {
+
+                responseSection.style.display =
+                    "block";
+
+                responseBox.classList.add(
+                    "error"
+                );
+
+                responseBox.textContent =
+                    "Please describe an infrastructure issue before running the analysis.";
+
+                return;
+
+            }
+
+
+            /*
+             * Show loading state.
+             */
+
+            responseSection.style.display =
+                "block";
+
+            responseBox.classList.remove(
+                "error"
+            );
+
+            responseBox.textContent =
+                "Analyzing infrastructure issue...";
+
+            button.disabled =
+                true;
+
+            button.textContent =
+                "Analyzing...";
+
+
+            try {
+
+
+                /*
+                 * Send the issue to FastAPI.
+                 */
+
+                const response =
+                    await fetch(
+                        "/demo/support",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    issue: issue
+                                })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                /*
+                 * Handle API errors.
+                 */
+
+                if (!response.ok) {
+
+                    responseBox.classList.add(
+                        "error"
+                    );
+
+                    responseBox.textContent =
+                        data.detail ||
+                        "Something went wrong while analyzing the issue.";
+
+                    return;
+
+                }
+
+
+                /*
+                 * Display AI response.
+                 */
+
+                responseBox.textContent =
+                    data.response;
+
+
+            } catch (error) {
+
+
+                responseBox.classList.add(
+                    "error"
+                );
+
+                responseBox.textContent =
+                    "Could not connect to the backend service.";
+
+
+            } finally {
+
+
+                button.disabled =
+                    false;
+
+                button.textContent =
+                    "Analyze Issue →";
+
+
+            }
+
+        }
+    );
+
 </script>
 
+
 </body>
+
 </html>
