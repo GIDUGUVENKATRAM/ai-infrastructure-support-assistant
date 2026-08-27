@@ -93,6 +93,34 @@ For a more detailed technical walkthrough, see:
 `docs/architecture.md`
 
 ---
+## Demo
+
+### AI Infrastructure Support Assistant
+
+The deployed web interface accepts infrastructure support issues and returns AI-assisted troubleshooting guidance.
+
+![AI Infrastructure Support Assistant](docs/screenshots/web-ui-demo.png)
+
+### RAG — Infrastructure Knowledge Retrieval
+
+The assistant retrieves infrastructure-specific troubleshooting guidance and escalation codes from the configured knowledge source.
+
+![RAG Demo](docs/screenshots/rag-demo.png)
+
+### Microsoft Foundry Agent and Tools
+
+The Foundry agent orchestrates model reasoning, knowledge retrieval, and external infrastructure tools.
+
+![Microsoft Foundry Agent](docs/screenshots/foundry-agent-tools.png)
+
+### Azure Container Apps Deployment
+
+The application is containerized and deployed to Azure Container Apps.
+
+![Azure Container Apps Deployment](docs/screenshots/azure-container-app.png)
+
+---
+
 
 ## Key Features
 
